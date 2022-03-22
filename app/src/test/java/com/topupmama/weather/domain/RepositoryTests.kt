@@ -5,13 +5,9 @@ import com.topupmama.weather.data.network.dto.WeatherResponse
 import com.topupmama.weather.data.repository.WeatherRepository
 import com.topupmama.weather.domain.repository.WeatherRepositoryImpl
 import junit.framework.Assert.assertEquals
-import junit.framework.Assert.assertSame
 import kotlinx.coroutines.runBlocking
-import net.bytebuddy.matcher.ElementMatchers.`is`
-import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Before
 import org.junit.Test
-import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.whenever
 
