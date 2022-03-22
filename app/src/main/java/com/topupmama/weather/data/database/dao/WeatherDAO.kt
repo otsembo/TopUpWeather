@@ -17,5 +17,7 @@ interface WeatherDAO {
     @Query("SELECT * FROM weather_data ORDER BY isFavorite DESC")
     fun getWeatherData() : LiveData<List<WeatherData>>
 
+    @Query("SELECT * FROM weather_data LIMIT 1")
+    fun getTopWeather() : WeatherData?
 
 }

@@ -21,6 +21,9 @@ interface FavoritesDAO {
     suspend fun clearDB()
 
     @Query("SELECT * FROM weather_favs")
-    fun getFavs() : LiveData<List<WeatherData>>
+    fun getFavs() : LiveData<List<Favorites>>
+
+    @Query("SELECT * FROM weather_favs LIMIT 1")
+    suspend fun getTopCity() : Favorites?
 
 }
