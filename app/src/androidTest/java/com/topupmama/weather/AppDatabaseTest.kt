@@ -26,7 +26,6 @@ class AppDatabaseTest {
     private lateinit var favoritesDAO: FavoritesDAO
     private lateinit var db:AppDatabase
     private lateinit var mCtx:Context
-
     private lateinit var fakeWeatherData: WeatherData
 
 
@@ -50,14 +49,19 @@ class AppDatabaseTest {
         db.close()
     }
 
+    private suspend fun addFavs(){
+        val favorite = Favorites(0,10)
+        favoritesDAO.insert(favorite)
+    }
+
+    private suspend fun addWeather(){
+        weatherDAO.insert(fakeWeatherData)
+    }
 
     @Test
     @Throws(Exception::class)
     fun insertDataToFavorites () = runBlocking {
-
-        val favorite = Favorites(0,10)
-        favoritesDAO.insert(favorite)
-
+        addFavs()
         assertEquals(favoritesDAO.getTopCity()?.cityId, 10)
 
     }
@@ -65,7 +69,8 @@ class AppDatabaseTest {
     @Test
     @Throws(Exception::class)
     fun deleteFromFavorites() = runBlocking {
-        favoritesDAO.removeFromFavorites(1)
+        addFavs()
+        favoritesDAO.clearDB()
         assertNull(favoritesDAO.getTopCity())
     }
 
@@ -73,8 +78,16 @@ class AppDatabaseTest {
     @Test
     @Throws(Exception::class)
     fun insertIntoWeatherData() = runBlocking {
-        weatherDAO.insert(fakeWeatherData)
+        addWeather()
         assertEquals(weatherDAO.getTopWeather()?.temp, 0.0)
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun updateWeatherData() = runBlocking {
+        addWeather()
+        weatherDAO.updateWeather(true, 1)
+        assertEquals(weatherDAO.getTopWeather()?.isFavorite, true)
     }
 
 

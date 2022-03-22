@@ -20,4 +20,7 @@ interface WeatherDAO {
     @Query("SELECT * FROM weather_data LIMIT 1")
     fun getTopWeather() : WeatherData?
 
+    @Query("UPDATE weather_data SET isFavorite = :fav WHERE id = :id")
+    suspend fun updateWeather(fav: Boolean, id:Int)
+
 }
