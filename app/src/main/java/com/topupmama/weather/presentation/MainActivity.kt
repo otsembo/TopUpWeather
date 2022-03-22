@@ -1,7 +1,8 @@
-package com.topupmama.weather
+package com.topupmama.weather.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.topupmama.weather.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
