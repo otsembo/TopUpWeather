@@ -3,7 +3,7 @@ package com.topupmama.weather.di
 import com.topupmama.weather.common.AppConstants
 import com.topupmama.weather.data.network.OpenWeatherApi
 import com.topupmama.weather.data.repository.WeatherRepository
-import com.topupmama.weather.domain.WeatherRepositoryImpl
+import com.topupmama.weather.domain.repository.WeatherRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

@@ -1,4 +1,4 @@
-package com.topupmama.weather.domain
+package com.topupmama.weather.domain.repository
 
 import com.topupmama.weather.data.network.OpenWeatherApi
 import com.topupmama.weather.data.network.dto.WeatherResponse
