@@ -15,5 +15,6 @@ data class WeatherData(
     val windSpeed:Double,
     val country:String,
     val pressure:Double,
-    val humidity:Double
+    val humidity:Double,
+    val isFavorite:Boolean
 )

@@ -21,6 +21,6 @@ fun CityWeather.getWeatherData() : WeatherData{
         city = name, temp = main.temp, weather = weather[0].main,
         icon = weather[0].icon, windSpeed = wind.speed,
         country = sys.country, pressure = main.pressure.toDouble(),
-        humidity = main.humidity.toDouble()
+        humidity = main.humidity.toDouble(), false
     )
 }
