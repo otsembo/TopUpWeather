@@ -31,8 +31,8 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideWeatherRepository(api: OpenWeatherApi) : WeatherRepository{
-        return WeatherRepositoryImpl(api)
+    fun provideWeatherRepository(api: OpenWeatherApi, db:AppDatabase) : WeatherRepository{
+        return WeatherRepositoryImpl(api, db)
     }
 
     @Provides
