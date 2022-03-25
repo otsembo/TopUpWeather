@@ -1,5 +1,7 @@
 package com.topupmama.weather.domain.use_cases
 
+import androidx.lifecycle.LiveData
+import com.topupmama.weather.data.model.WeatherData
 import com.topupmama.weather.data.network.dto.CityWeather
 import com.topupmama.weather.data.network.dto.getWeatherData
 import com.topupmama.weather.data.repository.WeatherRepository
@@ -19,6 +21,10 @@ object DbFunctions {
 
     class RetrieveWeatherFromDB
         @Inject constructor(private val repository: WeatherRepository){
+
+            operator fun invoke() : LiveData<List<WeatherData>>{
+                return repository.loadWeatherData();
+            }
 
         }
 

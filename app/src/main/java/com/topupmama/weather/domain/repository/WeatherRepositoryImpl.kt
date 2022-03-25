@@ -26,11 +26,11 @@ class WeatherRepositoryImpl
         db.favoritesDAO.insert(favorites)
     }
 
-    override suspend fun loadWeatherData(): LiveData<List<WeatherData>> {
+    override fun loadWeatherData(): LiveData<List<WeatherData>> {
         return db.weatherDAO.getWeatherData()
     }
 
-    override suspend fun loadFavorites(): LiveData<List<Favorites>> {
+    override fun loadFavorites(): LiveData<List<Favorites>> {
         return db.favoritesDAO.getFavs()
     }
 
