@@ -1,6 +1,7 @@
 package com.topupmama.weather.domain.use_cases
 
 import androidx.lifecycle.LiveData
+import com.topupmama.weather.data.model.Favorites
 import com.topupmama.weather.data.model.WeatherData
 import com.topupmama.weather.data.network.dto.CityWeather
 import com.topupmama.weather.data.network.dto.getWeatherData
@@ -21,11 +22,17 @@ object DbFunctions {
 
     class RetrieveWeatherFromDB
         @Inject constructor(private val repository: WeatherRepository){
-
             operator fun invoke() : LiveData<List<WeatherData>>{
                 return repository.loadWeatherData();
             }
+        }
 
+
+    class RetrieveFavoritesFromDB
+        @Inject constructor(private val repository: WeatherRepository){
+            operator fun invoke() : LiveData<List<Favorites>>{
+                return repository.loadFavorites()
+            }
         }
 
 }

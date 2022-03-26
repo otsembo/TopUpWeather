@@ -1,13 +1,13 @@
 package com.topupmama.weather.presentation.home
 
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import android.util.Log
+import androidx.lifecycle.*
 import com.topupmama.weather.common.AppResource
 import com.topupmama.weather.common.AppState
 import com.topupmama.weather.data.model.Favorites
 import com.topupmama.weather.data.model.WeatherData
+import com.topupmama.weather.data.network.dto.CityWeather
+import com.topupmama.weather.data.network.dto.getWeatherData
 import com.topupmama.weather.data.repository.WeatherRepository
 import com.topupmama.weather.domain.use_cases.DbFunctions
 import com.topupmama.weather.domain.use_cases.NetworkFunctions
@@ -22,12 +22,26 @@ class HomeVM
         private val repository: WeatherRepository, private val saveWeatherToDB: DbFunctions.SaveWeatherToDB
     ) : ViewModel(){
 
+    private val TAG:String = HomeVM::class.toString()
+
     private val weatherState:AppState<List<WeatherData>> = AppState()
     private val favoritesState: AppState<List<Favorites>> = AppState()
 
-    private val weatherLiveData:MutableLiveData<AppState<List<WeatherData>>> = MutableLiveData(weatherState)
+    private val _weatherLiveDataState:MutableLiveData<AppState<List<WeatherData>>> = MutableLiveData(weatherState)
+
+    val weatherLiveData : LiveData<List<WeatherData>>
+        get() = DbFunctions.RetrieveWeatherFromDB(repository)()
+
+    private val favoritesLiveData : LiveData<List<Favorites>>
+        get() = DbFunctions.RetrieveFavoritesFromDB(repository)()
 
 
+    init {
+
+        loadFromWeb()
+
+
+    }
 
 
     fun loadFromWeb(){
@@ -37,13 +51,48 @@ class HomeVM
             when(it){
 
                 is AppResource.AppLoading -> {
-                    weatherState.isLoading = true
+                    _weatherLiveDataState.value?.isLoading = true
+                    Log.d(TAG, "sambusa: ${_weatherLiveDataState.value?.isLoading}")
+                }
+
+                is AppResource.AppError -> {
+                    _weatherLiveDataState.value?.message = it.message
+                    Log.d(TAG, "sambusa: ${_weatherLiveDataState.value?.message}")
+                }
+
+                is AppResource.AppSuccess -> {
+                    _weatherLiveDataState.value?.data = setUpFavorites(it.data?.list)
+                    Log.d(TAG, "sambusa: ${_weatherLiveDataState.value?.data}")
                 }
 
             }
 
         }.launchIn(viewModelScope)
 
+    }
+
+
+    private fun setUpFavorites(cityWeatherData: List<CityWeather>?) : List<WeatherData>{
+        val data = ArrayList<WeatherData>()
+        val favoritesList = favoritesLiveData.value
+
+        cityWeatherData?.forEach {
+            cityWeather ->
+                val weather = cityWeather.getWeatherData()
+                weather.isFavorite = searchFavorites(cityWeather.id, favoritesList)
+                data.add(weather)
+        }
+        data.sortByDescending { it.isFavorite }
+        return data
+    }
+
+
+    private fun searchFavorites(cityId:Int, favorites: List<Favorites>?) : Boolean{
+        var isFav = false
+        favorites?.forEach {
+            if(it.cityId == cityId) isFav = true
+        }
+        return isFav
     }
 
 

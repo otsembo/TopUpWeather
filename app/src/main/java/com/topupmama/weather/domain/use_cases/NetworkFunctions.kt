@@ -28,7 +28,7 @@ object NetworkFunctions {
 
             }catch (e:Exception){
 
-                emit(AppResource.AppError<WeatherResponse>(e.localizedMessage?:"An unexpected error occurred. Please restart the application"))
+                emit(AppResource.AppError<WeatherResponse>(e.localizedMessage?:"An unexpected error occurred. Please check your internet connection and restart the application"))
 
             }
 

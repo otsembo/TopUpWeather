@@ -6,10 +6,7 @@ import retrofit2.http.Query
 
 interface OpenWeatherApi {
 
-    @GET("group")
-    suspend fun fetchWeather(
-        @Query("units")  units:String,
-        @Query("id")  id:String,
-    ) : WeatherResponse
+    @GET("/group")
+    suspend fun fetchWeather(@Query("units")  units:String, @Query("id")  id:String, @Query("appId") apiKey:String) : WeatherResponse
 
 }

@@ -1,6 +1,7 @@
 package com.topupmama.weather.domain.repository
 
 import androidx.lifecycle.LiveData
+import com.topupmama.weather.common.Api
 import com.topupmama.weather.data.database.AppDatabase
 import com.topupmama.weather.data.model.Favorites
 import com.topupmama.weather.data.model.WeatherData
@@ -15,7 +16,7 @@ class WeatherRepositoryImpl
     constructor(private val api:OpenWeatherApi, private val db:AppDatabase) : WeatherRepository{
 
     override suspend fun fetchData(units: String, id: String): WeatherResponse {
-        return api.fetchWeather(units, id)
+        return api.fetchWeather(units, id, Api.KEY)
     }
 
     override suspend fun saveWeatherToAppDB(weatherData: WeatherData) {
