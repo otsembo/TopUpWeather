@@ -32,6 +32,9 @@ class HomeVM
     val weatherLiveData : LiveData<List<WeatherData>>
         get() = DbFunctions.RetrieveWeatherFromDB(repository)()
 
+    val favWeatherLiveData : LiveData<List<WeatherData>>
+        get() = DbFunctions.RetrieveFavWeatherFromDB(repository)()
+
     private val favoritesLiveData : LiveData<List<Favorites>>
         get() = DbFunctions.RetrieveFavoritesFromDB(repository)()
 
@@ -69,7 +72,7 @@ class HomeVM
     }
 
 
-    private fun setUpFavorites(cityWeatherData: List<CityWeather>?) : List<WeatherData>{
+    fun setUpFavorites(cityWeatherData: List<CityWeather>?) : List<WeatherData>{
         val data = ArrayList<WeatherData>()
         val favoritesList = favoritesLiveData.value
 

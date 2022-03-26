@@ -26,4 +26,7 @@ interface WeatherDAO {
     @Query("DELETE from weather_data")
     suspend fun clearWeatherDB()
 
+    @Query("SELECT * FROM weather_data WHERE isFavorite = 1")
+    fun getFavWeather() : LiveData<List<WeatherData>>
+
 }

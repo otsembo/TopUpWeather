@@ -3,10 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation"
-    app:startDestination="@id/home2">
+    app:startDestination="@id/fragmentHome">
     <fragment
-        android:id="@+id/home2"
+        android:id="@+id/fragmentHome"
         android:name="com.topupmama.weather.presentation.home.Home"
         android:label="Home"
         tools:layout="@layout/home_fragment"/>
+    <fragment
+        android:id="@+id/fragmentFavs"
+        android:name="com.topupmama.weather.presentation.favorites.FavoritesPage"
+        android:label="FavoritesPage" />
 </navigation>

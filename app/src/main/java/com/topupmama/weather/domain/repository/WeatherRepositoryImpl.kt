@@ -42,4 +42,8 @@ class WeatherRepositoryImpl
     override suspend fun deleteWeatherFromDB() {
         return db.weatherDAO.clearWeatherDB()
     }
+
+    override fun loadFavoriteWeather(): LiveData<List<WeatherData>> {
+        return db.weatherDAO.getFavWeather()
+    }
 }
