@@ -52,17 +52,14 @@ class HomeVM
 
                 is AppResource.AppLoading -> {
                     _weatherLiveDataState.value?.isLoading = true
-                    Log.d(TAG, "sambusa: ${_weatherLiveDataState.value?.isLoading}")
                 }
 
                 is AppResource.AppError -> {
                     _weatherLiveDataState.value?.message = it.message
-                    Log.d(TAG, "sambusa: ${_weatherLiveDataState.value?.message}")
                 }
 
                 is AppResource.AppSuccess -> {
                     _weatherLiveDataState.value?.data = setUpFavorites(it.data?.list)
-                    Log.d(TAG, "sambusa: ${_weatherLiveDataState.value?.data}")
                 }
 
             }

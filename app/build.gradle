@@ -60,6 +60,7 @@ dependencies {
     //image loading
     implementation("io.coil-kt:coil:1.4.0")
 
+
     //navigation components
     def nav_version = "2.4.1"
     implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")

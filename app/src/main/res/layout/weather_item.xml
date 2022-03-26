@@ -6,6 +6,11 @@
         <variable
             name="weatherData"
             type="com.topupmama.weather.data.model.WeatherData" />
+
+        <variable
+            name="clickListener"
+            type="com.topupmama.weather.presentation.home.WeatherListAdapter.WeatherItemClickListener" />
+
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -13,7 +18,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         app:cardCornerRadius="@dimen/cardview_default_radius"
-        app:cardElevation="@dimen/cardview_default_elevation">
+        app:cardElevation="@dimen/cardview_default_elevation"
+        android:onClick="@{() -> clickListener.onClick(weatherData)}">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -35,6 +41,7 @@
                 android:text="@{weatherData.city}"
                 android:textSize="17sp"
                 android:textStyle="bold"
+                android:layout_marginTop="25dp"
                 android:layout_marginStart="5dp"
                 app:layout_constraintStart_toEndOf="@+id/weatherLogo"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -43,7 +50,7 @@
                 android:id="@+id/txtCountry"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{weatherData.city}"
+                android:text="@{weatherData.country}"
                 android:textSize="15sp"
                 android:textStyle="bold|italic"
                 android:layout_marginStart="5dp"
@@ -52,13 +59,15 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/isFavImage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_margin="15dp"
                 app:favIcon="@{weatherData.favorite}"
-                app:tint="@android:color/holo_purple"/>
+                app:tint="#FF0057"
+                android:clickable="true"
+                android:focusable="true" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -66,6 +75,7 @@
                 android:padding="5dp"
                 android:orientation="horizontal"
                 android:weightSum="2"
+                android:layout_marginBottom="5dp"
                 app:layout_constraintTop_toBottomOf="@id/weatherLogo"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -76,7 +86,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:layout_height="wrap_content"
-                    android:textSize="17sp"
+                    android:textSize="20sp"
                     android:text="@{weatherData.weather}"
                     android:id="@+id/txtWeatherType"/>
 
@@ -85,7 +95,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:layout_height="wrap_content"
-                    android:textSize="17sp"
+                    android:textSize="20sp"
                     android:id="@+id/txtTemp"
                     app:temp="@{weatherData.temp}"/>
 
