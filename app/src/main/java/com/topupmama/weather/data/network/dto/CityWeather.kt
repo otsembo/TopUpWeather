@@ -1,5 +1,6 @@
 package com.topupmama.weather.data.network.dto
 
+import com.topupmama.weather.common.AppConstants.getWeatherIcon
 import com.topupmama.weather.data.model.WeatherData
 
 data class CityWeather(
@@ -19,7 +20,7 @@ fun CityWeather.getWeatherData() : WeatherData{
     return WeatherData(
         id = id.toLong(),
         city = name, temp = main.temp, weather = weather[0].main,
-        icon = weather[0].icon, windSpeed = wind.speed,
+        icon = getWeatherIcon(weather[0].icon), windSpeed = wind.speed,
         country = sys.country, pressure = main.pressure.toDouble(),
         humidity = main.humidity.toDouble(), false
     )

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="weatherData"
+            type="com.topupmama.weather.data.model.WeatherData" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:cardCornerRadius="@dimen/cardview_default_radius"
+        app:cardElevation="@dimen/cardview_default_elevation">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/weatherLogo"
+                android:layout_width="125dp"
+                android:layout_height="125dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:scaleType="centerCrop"
+                app:weatherIcon="@{weatherData.icon}" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txtCityName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{weatherData.city}"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                app:layout_constraintStart_toEndOf="@+id/weatherLogo"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txtCountry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{weatherData.city}"
+                android:textSize="15sp"
+                android:textStyle="bold|italic"
+                android:layout_marginStart="5dp"
+                app:layout_constraintStart_toEndOf="@+id/weatherLogo"
+                app:layout_constraintTop_toBottomOf="@id/txtCityName" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/isFavImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_margin="15dp"
+                app:favIcon="@{weatherData.favorite}"
+                app:tint="@android:color/holo_purple"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                app:layout_constraintTop_toBottomOf="@id/weatherLogo"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:layout_height="wrap_content"
+                    android:textSize="17sp"
+                    android:text="@{weatherData.weather}"
+                    android:id="@+id/txtWeatherType"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:layout_height="wrap_content"
+                    android:textSize="17sp"
+                    android:id="@+id/txtTemp"
+                    app:temp="@{weatherData.temp}"/>
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>

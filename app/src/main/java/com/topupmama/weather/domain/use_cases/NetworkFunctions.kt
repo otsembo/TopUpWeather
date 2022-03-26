@@ -25,8 +25,6 @@ object NetworkFunctions {
 
                 emit(AppResource.AppSuccess<WeatherResponse>(data = data))
 
-                DbFunctions.DeleteWeatherFromDB(repository)()
-
                 saveWeatherToDB(data.list)
 
             }catch (e:Exception){
