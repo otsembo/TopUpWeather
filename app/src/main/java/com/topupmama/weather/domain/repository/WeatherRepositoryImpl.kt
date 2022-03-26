@@ -38,4 +38,8 @@ class WeatherRepositoryImpl
     override suspend fun deleteFromFavorites(cityId: Long) {
         return db.favoritesDAO.removeFromFavorites(cityId)
     }
+
+    override suspend fun deleteWeatherFromDB() {
+        return db.weatherDAO.clearWeatherDB()
+    }
 }

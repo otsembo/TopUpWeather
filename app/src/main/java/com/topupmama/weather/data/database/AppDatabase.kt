@@ -9,7 +9,7 @@ import com.topupmama.weather.data.database.dao.WeatherDAO
 import com.topupmama.weather.data.model.Favorites
 import com.topupmama.weather.data.model.WeatherData
 
-@Database(entities = [WeatherData::class, Favorites::class], version = 1, exportSchema = false)
+@Database(entities = [WeatherData::class, Favorites::class], version = 2, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract val weatherDAO: WeatherDAO

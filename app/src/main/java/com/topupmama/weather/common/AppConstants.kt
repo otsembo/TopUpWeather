@@ -1,5 +1,6 @@
 package com.topupmama.weather.common
 
+import android.util.Log
 import java.lang.StringBuilder
 
 object AppConstants {
@@ -36,12 +37,12 @@ object AppConstants {
     }
 
     private fun cityIds() : String{
-        val builder = StringBuilder();
+        val builder = StringBuilder()
         for (i in setUpCities().keys){
             builder.append(i).append(',');
         }
         //remove final comma
-        return builder.toString().substring(0, setUpCities().size - 1)
+        return builder.toString().removeSuffix(",")
 
     }
 

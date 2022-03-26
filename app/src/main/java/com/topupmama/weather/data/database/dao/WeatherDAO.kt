@@ -23,4 +23,7 @@ interface WeatherDAO {
     @Query("UPDATE weather_data SET isFavorite = :fav WHERE id = :id")
     suspend fun updateWeather(fav: Boolean, id:Int)
 
+    @Query("DELETE from weather_data")
+    suspend fun clearWeatherDB()
+
 }

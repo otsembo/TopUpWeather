@@ -11,6 +11,8 @@ interface WeatherRepository {
 
     suspend fun saveWeatherToAppDB(weatherData: WeatherData)
 
+    suspend fun deleteWeatherFromDB()
+
     suspend fun saveFavorites(favorites: Favorites)
 
     fun loadWeatherData() : LiveData<List<WeatherData>>

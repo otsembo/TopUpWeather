@@ -20,6 +20,13 @@ object DbFunctions {
             }
         }
 
+    class DeleteWeatherFromDB
+    @Inject constructor(private val repository: WeatherRepository) {
+        suspend operator fun invoke(){
+            repository.deleteWeatherFromDB()
+        }
+    }
+
     class RetrieveWeatherFromDB
         @Inject constructor(private val repository: WeatherRepository){
             operator fun invoke() : LiveData<List<WeatherData>>{

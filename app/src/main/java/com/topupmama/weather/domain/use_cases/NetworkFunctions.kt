@@ -1,5 +1,6 @@
 package com.topupmama.weather.domain.use_cases
 
+import android.util.Log
 import com.topupmama.weather.common.AppConstants.CITY_IDS
 import com.topupmama.weather.common.AppConstants.WEATHER_UNITS
 import com.topupmama.weather.common.AppResource
@@ -23,6 +24,8 @@ object NetworkFunctions {
                 val data = repository.fetchData(WEATHER_UNITS, CITY_IDS)
 
                 emit(AppResource.AppSuccess<WeatherResponse>(data = data))
+
+                DbFunctions.DeleteWeatherFromDB(repository)()
 
                 saveWeatherToDB(data.list)
 
