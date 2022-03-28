@@ -38,6 +38,12 @@ MAIN SCREEN | FAVORITES SCREEN | DETAILS PAGE | SEARCH PAGE |
 ----------- | ----------- | ------------- |  ----------- |
 <img src="images/home.jpg" width="150"/> | <img src="images/favs.jpg" width="150"/> | <img src="images/details.jpg" width="150"/> | <img src="images/home.jpg" width="150"/> |
 
+## SET UP
+ * In order to run the app, you need to get an API key from [OpenWeatherMap API](https://openweathermap.org/api)
+ * Create a file inside ``common`` called ```Api.Kt```
+ * In the file add the following:
+        
+        object Api { const val KEY = "KEY_HERE"}
 
 ## LICENSE
 This project is distributed under Apache License 2.0
