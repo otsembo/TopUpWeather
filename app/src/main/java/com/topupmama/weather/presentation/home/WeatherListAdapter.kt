@@ -8,6 +8,7 @@ import android.widget.Filterable
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.topupmama.weather.common.AppConstants.TRANSITION_NAME
 import com.topupmama.weather.data.model.WeatherData
 import com.topupmama.weather.databinding.WeatherItemBinding
 
@@ -56,6 +57,7 @@ class WeatherListAdapter(private val weatherItemClickListener: WeatherItemClickL
                 binding.weatherData = weatherData
                 binding.clickListener = clickListener
                 binding.favListener = favListener
+                binding.weatherLogo.transitionName = "transition${weatherData.id}"
                 binding.executePendingBindings()
             }
 

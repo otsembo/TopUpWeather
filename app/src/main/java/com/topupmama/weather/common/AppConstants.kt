@@ -9,6 +9,10 @@ object AppConstants {
 
     const val WEATHER_UNITS = "metric"
 
+    const val TRANSITION_NAME = "transitionName"
+
+    const val WEATHER_KEY = "weatherData"
+
     val CITY_IDS = cityIds()
 
     private fun setUpCities() : HashMap<Int, String> {

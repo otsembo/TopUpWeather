@@ -32,7 +32,7 @@ fun ImageView.setFavIcon(isFav:Boolean){
 
 @BindingAdapter("temp")
 fun TextView.setTemperature(temp: Double){
-    val tmp = "$temp C"
+    val tmp = "$temp °C"
     text = tmp
 }
 
@@ -43,4 +43,34 @@ fun LinearLayout.show(isShown:Boolean){
         true -> View.VISIBLE
         else -> View.GONE
     }
+}
+
+@BindingAdapter("weatherData")
+fun TextView.setWeatherData(data:String){
+    text = StringBuilder().append("Weather: ").append(data).toString().trim()
+}
+
+@BindingAdapter("windSpeed")
+fun TextView.setWindSpeed(data:Double){
+    text = StringBuilder().append("Wind Speed: ").append(data).append(" km/h").toString().trim()
+}
+
+@BindingAdapter("humidity")
+fun TextView.setHumidity(data:Double){
+    text = StringBuilder().append("Humidity: ").append(data).append("%").toString().trim()
+}
+
+@BindingAdapter("weatherTemp")
+fun TextView.setTemp(data:Double){
+    text = StringBuilder().append("Temperature: ").append(data).append(" °C").toString().trim()
+}
+
+@BindingAdapter("airPressure")
+fun TextView.setAirPressure(data:Double){
+    text = StringBuilder().append("Air Pressure: ").append(data).append(" N/m2").toString().trim()
+}
+
+@BindingAdapter(value = ["city", "region"])
+fun TextView.setRegion(city:String, region:String){
+    text = StringBuilder().append(city).append(",\n").append(region)
 }

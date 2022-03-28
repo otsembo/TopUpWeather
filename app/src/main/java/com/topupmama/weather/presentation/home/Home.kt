@@ -10,7 +10,11 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
+import androidx.navigation.ui.NavigationUI
 import com.topupmama.weather.R
+import com.topupmama.weather.common.AppConstants.TRANSITION_NAME
+import com.topupmama.weather.common.AppConstants.WEATHER_KEY
 import com.topupmama.weather.databinding.HomeFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -31,6 +35,12 @@ class Home : Fragment() {
 
         val adapter = WeatherListAdapter(
             WeatherListAdapter.WeatherItemClickListener {
+
+                val weatherData = Bundle()
+                weatherData.putParcelable(WEATHER_KEY, it)
+                weatherData.putString(TRANSITION_NAME, "transition${it.id}")
+                //val directions = HomeDirections.actionFragmentHomeToDetailsPage(it)
+                binding.root.findNavController().navigate(R.id.action_fragmentHome_to_detailsPage, args = weatherData)
 
             },
             WeatherListAdapter.FavListener{
