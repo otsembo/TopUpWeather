@@ -7,12 +7,16 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.viewModelScope
+import androidx.navigation.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.topupmama.weather.R
+import com.topupmama.weather.common.AppConstants
 import com.topupmama.weather.databinding.FavoritesFragmentBinding
 import com.topupmama.weather.presentation.home.HomeVM
 import com.topupmama.weather.presentation.home.WeatherListAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class FavoritesPage : Fragment() {
@@ -31,8 +35,17 @@ class FavoritesPage : Fragment() {
         val adapter = WeatherListAdapter(
             WeatherListAdapter.WeatherItemClickListener {
 
+                val weatherData = Bundle()
+                weatherData.putParcelable(AppConstants.WEATHER_KEY, it)
+                weatherData.putString(AppConstants.TRANSITION_NAME, "transition${it.id}")
+                //val directions = HomeDirections.actionFragmentHomeToDetailsPage(it)
+                binding.root.findNavController().navigate(R.id.action_fragmentHome_to_detailsPage, args = weatherData)
             },
             WeatherListAdapter.FavListener{
+
+                homeVM.viewModelScope.launch {
+                    homeVM.toggleFavorite(it)
+                }
 
             }
         )
