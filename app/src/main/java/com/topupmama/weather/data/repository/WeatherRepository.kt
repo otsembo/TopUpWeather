@@ -27,5 +27,7 @@ interface WeatherRepository {
 
     suspend fun updateWeather(isFav:Int, cityId: Long)
 
+    suspend fun readFavoritesList() : List<WeatherData>
+
 
 }

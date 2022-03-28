@@ -29,4 +29,7 @@ interface WeatherDAO {
     @Query("SELECT * FROM weather_data WHERE isFavorite = 1")
     fun getFavWeather() : LiveData<List<WeatherData>>
 
+    @Query("SELECT * FROM weather_data WHERE isFavorite = 1")
+    suspend fun getMyFavs() : List<WeatherData>
+
 }

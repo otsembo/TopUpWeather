@@ -54,4 +54,8 @@ class WeatherRepositoryImpl
     override suspend fun getFavorites(): List<Favorites> {
         return db.favoritesDAO.fetchAllFavs()
     }
+
+    override suspend fun readFavoritesList(): List<WeatherData> {
+        return db.weatherDAO.getMyFavs()
+    }
 }

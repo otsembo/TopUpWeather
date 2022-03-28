@@ -1,5 +1,7 @@
 package com.topupmama.weather.presentation.home
 
+import android.app.Application
+import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.*
@@ -12,6 +14,7 @@ import com.topupmama.weather.data.network.dto.getWeatherData
 import com.topupmama.weather.data.repository.WeatherRepository
 import com.topupmama.weather.domain.use_cases.DbFunctions
 import com.topupmama.weather.domain.use_cases.NetworkFunctions
+import com.topupmama.weather.presentation.notifications.AppNotifications
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -21,8 +24,8 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeVM
     @Inject constructor(
-        private val repository: WeatherRepository, private val saveWeatherToDB: DbFunctions.SaveWeatherToDB
-    ) : ViewModel(){
+        private val repository: WeatherRepository, private val saveWeatherToDB: DbFunctions.SaveWeatherToDB, private val mCtx:Application
+    ) : AndroidViewModel(mCtx){
 
     private val TAG:String = HomeVM::class.toString()
 
@@ -87,6 +90,7 @@ class HomeVM
                 val weather = cityWeather.getWeatherData()
                 weather.isFavorite = searchFavorites(cityWeather.id, favoritesList)
                 data.add(weather)
+                AppNotifications(mCtx.applicationContext).createNotification(weather)
         }
         data.sortByDescending { it.isFavorite }
         return data

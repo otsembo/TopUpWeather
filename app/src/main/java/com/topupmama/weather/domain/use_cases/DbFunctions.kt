@@ -1,11 +1,15 @@
 package com.topupmama.weather.domain.use_cases
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import com.topupmama.weather.data.model.Favorites
 import com.topupmama.weather.data.model.WeatherData
 import com.topupmama.weather.data.network.dto.CityWeather
 import com.topupmama.weather.data.network.dto.getWeatherData
 import com.topupmama.weather.data.repository.WeatherRepository
+import com.topupmama.weather.presentation.notifications.AppNotifications
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 object DbFunctions {
@@ -86,5 +90,15 @@ object DbFunctions {
 
             }
         }
+
+    class ShowFavoritesNotifications(private val ioCoroutineScope: CoroutineScope, private val repository: WeatherRepository, private val mCtx:Context){
+        operator fun invoke(){
+            ioCoroutineScope.launch {
+                repository.readFavoritesList().forEach {
+                    AppNotifications(mCtx).createNotification(it)
+                }
+            }
+        }
+    }
 
 }

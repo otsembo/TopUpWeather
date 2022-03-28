@@ -22,7 +22,7 @@ import javax.inject.Inject
 @HiltWorker
 class RefreshWeather
     @AssistedInject
-    constructor (@Assisted mCtx:Context, @Assisted workerParameters: WorkerParameters, private val workerDependencies: WorkerDependencies) : Worker(mCtx, workerParameters) {
+    constructor (@Assisted val mCtx:Context, @Assisted workerParameters: WorkerParameters, private val workerDependencies: WorkerDependencies) : Worker(mCtx, workerParameters) {
 
     /*private val ioScope:CoroutineScope = CoroutineScope(Dispatchers.IO)
     private val repository: WeatherRepository = AppModule.provideWeatherRepository(AppModule.provideApi(),AppModule.provideAppDB(mCtx))*/
@@ -30,16 +30,19 @@ class RefreshWeather
     override fun doWork(): Result {
 
         return try {
-            Log.d("TAG", "doWork: Work Here")
-
-            NetworkFunctions.RetrieveNetworkUseCase(workerDependencies.repo,
-                DbFunctions.SaveWeatherToDB(workerDependencies.repo)).invoke()
-                .launchIn(workerDependencies.scope)
-
+            DbFunctions.ShowFavoritesNotifications(
+                workerDependencies.scope,
+                workerDependencies.repo,
+                mCtx = mCtx
+            )
             Result.success()
         }catch (e:Exception){
             Log.d("TAG", "doWork: ${e.message}")
             Result.retry()
+        }finally {
+            NetworkFunctions.RetrieveNetworkUseCase(workerDependencies.repo,
+                DbFunctions.SaveWeatherToDB(workerDependencies.repo)).invoke()
+                .launchIn(workerDependencies.scope)
         }
 
     }
