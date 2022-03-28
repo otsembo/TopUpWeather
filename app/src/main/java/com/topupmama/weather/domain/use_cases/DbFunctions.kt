@@ -13,8 +13,11 @@ object DbFunctions {
 
     class SaveWeatherToDB
         @Inject constructor(private val repository: WeatherRepository) {
-           operator fun invoke(cityWeather: List<CityWeather>){
-               setUpFavorites(cityWeather)
+           suspend operator fun invoke(cityWeather: List<CityWeather>){
+               val data = setUpFavorites(cityWeather)
+               data.forEach {
+                   repository.saveWeatherToAppDB(it)
+               }
             }
 
             private fun setUpFavorites(cityWeatherData: List<CityWeather>?) : List<WeatherData>{
@@ -63,8 +66,24 @@ object DbFunctions {
 
     class RetrieveFavoritesFromDB
         @Inject constructor(private val repository: WeatherRepository){
-            operator fun invoke() : LiveData<List<Favorites>>{
-                return repository.loadFavorites()
+            suspend operator fun invoke() : List<Favorites>{
+                return repository.getFavorites()
+            }
+        }
+
+    class ToggleFavorites
+        @Inject constructor(private val repository: WeatherRepository){
+            suspend operator fun invoke(id:Long, isFav:Boolean){
+                if(isFav) {
+                    repository.deleteFromFavorites(id)
+                    repository.updateWeather(0, id)
+                }
+                else {
+                    repository.saveFavorites(Favorites(0,id.toInt()))
+                    repository.updateWeather(1, id)
+                }
+
+
             }
         }
 

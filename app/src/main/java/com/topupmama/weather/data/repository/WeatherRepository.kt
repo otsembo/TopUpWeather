@@ -21,7 +21,11 @@ interface WeatherRepository {
 
     fun loadFavorites() : LiveData<List<Favorites>>
 
+    suspend fun getFavorites() : List<Favorites>
+
     suspend fun deleteFromFavorites(cityId:Long)
+
+    suspend fun updateWeather(isFav:Int, cityId: Long)
 
 
 }

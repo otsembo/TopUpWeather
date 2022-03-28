@@ -10,11 +10,9 @@ import com.topupmama.weather.data.database.dao.WeatherDAO
 import com.topupmama.weather.data.model.Favorites
 import com.topupmama.weather.data.model.WeatherData
 import kotlinx.coroutines.runBlocking
-import org.junit.After
+import org.junit.*
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
-import org.junit.Before
-import org.junit.Test
 import org.junit.runner.RunWith
 import java.io.IOException
 import kotlin.jvm.Throws
@@ -86,8 +84,8 @@ class AppDatabaseTest {
     @Throws(Exception::class)
     fun updateWeatherData() = runBlocking {
         addWeather()
-        weatherDAO.updateWeather(true, 1)
-        assertEquals(weatherDAO.getTopWeather()?.isFavorite, true)
+        weatherDAO.updateWeather(1, 1)
+        assertEquals( true,weatherDAO.getTopWeather()?.isFavorite)
     }
 
 

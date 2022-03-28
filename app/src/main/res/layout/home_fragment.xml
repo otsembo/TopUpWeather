@@ -9,6 +9,7 @@
         <variable
             name="dataAdapter"
             type="com.topupmama.weather.presentation.home.WeatherListAdapter" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -37,7 +38,7 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="There was an error loading your content. Kindly check your internet and try again."
+                android:text="@string/there_was_an_error_loading_your_content_kindly_check_your_internet_and_try_again"
                 android:layout_marginTop="5dp"
                 android:textSize="25sp"
                 android:padding="2.5dp"
@@ -47,7 +48,7 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="RETRY"
+                android:text="@string/retry"
                 android:id="@+id/btnRetry"/>
 
         </LinearLayout>
@@ -55,9 +56,11 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/loader"
             android:padding="5dp"
             android:visibility="gone"
             android:gravity="center"
+            app:show="@{homeViewModel.appState.loading}"
             android:orientation="vertical"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"

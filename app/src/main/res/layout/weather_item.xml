@@ -11,6 +11,10 @@
             name="clickListener"
             type="com.topupmama.weather.presentation.home.WeatherListAdapter.WeatherItemClickListener" />
 
+        <variable
+            name="favListener"
+            type="com.topupmama.weather.presentation.home.WeatherListAdapter.FavListener" />
+
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -65,6 +69,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_margin="15dp"
                 app:favIcon="@{weatherData.favorite}"
+                android:onClick="@{() -> favListener.onClick(weatherData.id)}"
                 app:tint="#FF0057"
                 android:clickable="true"
                 android:focusable="true" />

@@ -1,7 +1,9 @@
 package com.topupmama.weather.presentation
 
 import android.os.Build.VERSION.SDK_INT
+import android.view.View
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
@@ -34,3 +36,11 @@ fun TextView.setTemperature(temp: Double){
     text = tmp
 }
 
+
+@BindingAdapter("show")
+fun LinearLayout.show(isShown:Boolean){
+    visibility = when(isShown){
+        true -> View.VISIBLE
+        else -> View.GONE
+    }
+}

@@ -27,9 +27,14 @@ class FavoritesPage : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.homeViewModel = homeVM
 
-        val adapter = WeatherListAdapter(WeatherListAdapter.WeatherItemClickListener {
+        val adapter = WeatherListAdapter(
+            WeatherListAdapter.WeatherItemClickListener {
 
-        })
+            },
+            WeatherListAdapter.FavListener{
+
+            }
+        )
 
         binding.dataAdapter = adapter
 

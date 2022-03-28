@@ -2,4 +2,6 @@
     <string name="app_name">WeatherApi</string>
     <string name="please_wait">PLEASE WAIT ...</string>
     <string name="search">Search</string>
+    <string name="there_was_an_error_loading_your_content_kindly_check_your_internet_and_try_again">There was an error loading your content. Kindly check your internet and try again.</string>
+    <string name="retry">RETRY</string>
 </resources>

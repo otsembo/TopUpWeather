@@ -35,8 +35,8 @@ class WeatherRepositoryImpl
         return db.favoritesDAO.getFavs()
     }
 
-    override suspend fun deleteFromFavorites(cityId: Long) {
-        return db.favoritesDAO.removeFromFavorites(cityId)
+    override suspend fun deleteFromFavorites(cityId: Long)  {
+         db.favoritesDAO.removeFromFavorites(cityId)
     }
 
     override suspend fun deleteWeatherFromDB() {
@@ -45,5 +45,13 @@ class WeatherRepositoryImpl
 
     override fun loadFavoriteWeather(): LiveData<List<WeatherData>> {
         return db.weatherDAO.getFavWeather()
+    }
+
+    override suspend fun updateWeather(isFav: Int, cityId: Long) {
+        db.weatherDAO.updateWeather(isFav, cityId.toInt())
+    }
+
+    override suspend fun getFavorites(): List<Favorites> {
+        return db.favoritesDAO.fetchAllFavs()
     }
 }

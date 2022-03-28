@@ -9,13 +9,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.topupmama.weather.data.model.WeatherData
 import com.topupmama.weather.databinding.WeatherItemBinding
 
-class WeatherListAdapter(private val weatherItemClickListener: WeatherItemClickListener) :
+class WeatherListAdapter(private val weatherItemClickListener: WeatherItemClickListener, private val favListener: FavListener) :
     ListAdapter<WeatherData, WeatherListAdapter.WeatherViewHolder>(WeatherItemDiffCallback()) {
 
 
     //click listener
     class WeatherItemClickListener(val listener: (weatherData:WeatherData) -> Unit){
         fun onClick(weatherData: WeatherData) = listener(weatherData)
+    }
+
+    class FavListener(val listener: (cityId:Long) -> Unit){
+        fun onClick(cityId:Long) = listener(cityId)
     }
 
     // diff util callback
@@ -38,7 +42,7 @@ class WeatherListAdapter(private val weatherItemClickListener: WeatherItemClickL
     override fun onBindViewHolder(holder: WeatherViewHolder, position: Int) {
         val item = getItem(position) as WeatherData
         Log.d("TAG", "onBindViewHolder: $item")
-        holder.bind(weatherData = item, weatherItemClickListener)
+        holder.bind(weatherData = item, weatherItemClickListener, favListener)
     }
 
 
@@ -47,9 +51,10 @@ class WeatherListAdapter(private val weatherItemClickListener: WeatherItemClickL
     class WeatherViewHolder
         private constructor(private val binding:WeatherItemBinding): RecyclerView.ViewHolder(binding.root){
 
-            fun bind(weatherData: WeatherData, clickListener: WeatherItemClickListener){
+            fun bind(weatherData: WeatherData, clickListener: WeatherItemClickListener, favListener: FavListener){
                 binding.weatherData = weatherData
                 binding.clickListener = clickListener
+                binding.favListener = favListener
                 binding.executePendingBindings()
             }
 

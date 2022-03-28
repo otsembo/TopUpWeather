@@ -1,6 +1,7 @@
 package com.topupmama.weather.presentation.home
 
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.*
 import com.topupmama.weather.common.AppResource
 import com.topupmama.weather.common.AppState
@@ -14,6 +15,7 @@ import com.topupmama.weather.domain.use_cases.NetworkFunctions
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -35,14 +37,17 @@ class HomeVM
     val favWeatherLiveData : LiveData<List<WeatherData>>
         get() = DbFunctions.RetrieveFavWeatherFromDB(repository)()
 
-    private val favoritesLiveData : LiveData<List<Favorites>>
-        get() = DbFunctions.RetrieveFavoritesFromDB(repository)()
+    val appState : LiveData<AppState<List<WeatherData>>>
+        get() = _weatherLiveDataState
 
+    val favLiveData : LiveData<List<Favorites>>
+        get() = repository.loadFavorites()
+
+    var userFavorites : List<Favorites> = emptyList()
 
     init {
 
         loadFromWeb()
-
 
     }
 
@@ -54,15 +59,16 @@ class HomeVM
             when(it){
 
                 is AppResource.AppLoading -> {
-                    _weatherLiveDataState.value?.isLoading = true
+
+                    _weatherLiveDataState.value = AppState(isLoading = true)
                 }
 
                 is AppResource.AppError -> {
-                    _weatherLiveDataState.value?.message = it.message
+                    _weatherLiveDataState.value = AppState(message = it.message)
                 }
 
                 is AppResource.AppSuccess -> {
-                    _weatherLiveDataState.value?.data = setUpFavorites(it.data?.list)
+                    _weatherLiveDataState.value = AppState(data =  setUpFavorites(it.data?.list))
                 }
 
             }
@@ -74,7 +80,7 @@ class HomeVM
 
     fun setUpFavorites(cityWeatherData: List<CityWeather>?) : List<WeatherData>{
         val data = ArrayList<WeatherData>()
-        val favoritesList = favoritesLiveData.value
+        val favoritesList = userFavorites
 
         cityWeatherData?.forEach {
             cityWeather ->
@@ -94,6 +100,14 @@ class HomeVM
         }
         return isFav
     }
+
+
+    suspend fun toggleFavorite(cityId: Long){
+        val isFav = searchFavorites(cityId = cityId.toInt(), favorites = userFavorites)
+        Log.d(TAG, "toggleFavorite: $cityId => $isFav => $userFavorites")
+        DbFunctions.ToggleFavorites(repository).invoke(cityId, isFav)
+    }
+
 
 
 }

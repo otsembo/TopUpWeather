@@ -15,13 +15,16 @@ interface FavoritesDAO {
     suspend fun insert(favorites: Favorites)
 
     @Query("DELETE FROM weather_favs WHERE city_id = :id")
-    suspend fun removeFromFavorites(id:Long)
+    suspend fun removeFromFavorites(id:Long) : Int
 
     @Query("DELETE FROM weather_favs")
     suspend fun clearDB()
 
     @Query("SELECT * FROM weather_favs")
     fun getFavs() : LiveData<List<Favorites>>
+
+    @Query("SELECT * FROM weather_favs")
+    suspend fun fetchAllFavs() : List<Favorites>
 
     @Query("SELECT * FROM weather_favs LIMIT 1")
     suspend fun getTopCity() : Favorites?
