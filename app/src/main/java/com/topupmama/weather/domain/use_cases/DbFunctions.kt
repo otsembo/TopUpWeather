@@ -1,6 +1,7 @@
 package com.topupmama.weather.domain.use_cases
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import com.topupmama.weather.data.model.Favorites
 import com.topupmama.weather.data.model.WeatherData
@@ -24,9 +25,9 @@ object DbFunctions {
                }
             }
 
-            private fun setUpFavorites(cityWeatherData: List<CityWeather>?) : List<WeatherData>{
+            private suspend fun setUpFavorites(cityWeatherData: List<CityWeather>?) : List<WeatherData>{
                 val data = ArrayList<WeatherData>()
-                val favoritesList = repository.loadFavorites().value
+                val favoritesList = repository.getFavorites()
 
                 cityWeatherData?.forEach {
                         cityWeather ->

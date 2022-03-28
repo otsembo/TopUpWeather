@@ -15,6 +15,7 @@ import com.topupmama.weather.databinding.WeatherItemBinding
 class WeatherListAdapter(private val weatherItemClickListener: WeatherItemClickListener, private val favListener: FavListener) :
     ListAdapter<WeatherData, WeatherListAdapter.WeatherViewHolder>(WeatherItemDiffCallback()), Filterable {
 
+    private val originalList:List<WeatherData> = currentList
 
     //click listener
     class WeatherItemClickListener(val listener: (weatherData:WeatherData) -> Unit){
@@ -82,7 +83,7 @@ class WeatherListAdapter(private val weatherItemClickListener: WeatherItemClickL
                p0?.let {
 
                    if(it.isEmpty()) {
-                       submitList(currentList)
+                       submitList(originalList)
                    }
                    else{
 

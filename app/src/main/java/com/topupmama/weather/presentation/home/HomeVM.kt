@@ -30,7 +30,6 @@ class HomeVM
     private val TAG:String = HomeVM::class.toString()
 
     private val weatherState:AppState<List<WeatherData>> = AppState()
-    private val favoritesState: AppState<List<Favorites>> = AppState()
 
     private val _weatherLiveDataState:MutableLiveData<AppState<List<WeatherData>>> = MutableLiveData(weatherState)
 
@@ -55,7 +54,7 @@ class HomeVM
     }
 
 
-    private fun loadFromWeb(){
+    fun loadFromWeb(){
 
         NetworkFunctions.RetrieveNetworkUseCase(repository, saveWeatherToDB)().onEach {
 
@@ -90,7 +89,6 @@ class HomeVM
                 val weather = cityWeather.getWeatherData()
                 weather.isFavorite = searchFavorites(cityWeather.id, favoritesList)
                 data.add(weather)
-                AppNotifications(mCtx.applicationContext).createNotification(weather)
         }
         data.sortByDescending { it.isFavorite }
         return data

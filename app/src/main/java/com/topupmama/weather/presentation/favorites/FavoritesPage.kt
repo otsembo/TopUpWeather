@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.google.android.material.snackbar.Snackbar
 import com.topupmama.weather.R
 import com.topupmama.weather.databinding.FavoritesFragmentBinding
 import com.topupmama.weather.presentation.home.HomeVM
@@ -40,6 +41,11 @@ class FavoritesPage : Fragment() {
 
         homeVM.favWeatherLiveData.observe(viewLifecycleOwner){
             adapter.submitList(it)
+
+            if(it.isEmpty()){
+                view?.let { it1 -> Snackbar.make(it1, "You have no favorites at this time", Snackbar.LENGTH_LONG).show() }
+            }
+
         }
 
         return binding.root

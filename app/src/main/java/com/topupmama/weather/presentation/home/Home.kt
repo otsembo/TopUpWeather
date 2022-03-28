@@ -5,6 +5,8 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
@@ -17,10 +19,7 @@ import com.topupmama.weather.common.AppConstants.TRANSITION_NAME
 import com.topupmama.weather.common.AppConstants.WEATHER_KEY
 import com.topupmama.weather.databinding.HomeFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 
 @AndroidEntryPoint
 class Home : Fragment() {
@@ -58,6 +57,12 @@ class Home : Fragment() {
 
         homeVM.weatherLiveData.observe(viewLifecycleOwner) {
             adapter.submitList(it)
+
+            binding.emptyData.visibility = when(it.isEmpty()){
+                true -> VISIBLE
+                else -> GONE
+            }
+
         }
 
         homeVM.favLiveData.observe(viewLifecycleOwner){
@@ -77,6 +82,23 @@ class Home : Fragment() {
 
             }
         })
+
+        binding.btnRetry.setOnClickListener {
+
+            homeVM.loadFromWeb()
+        }
+
+        binding.refresher.setOnRefreshListener {
+
+            homeVM.loadFromWeb()
+
+            CoroutineScope(Dispatchers.Main).launch {
+                delay(2000)
+                binding.refresher.isRefreshing = false
+            }
+
+
+        }
 
         return binding.root
     }
