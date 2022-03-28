@@ -52,7 +52,7 @@ class HomeVM
     }
 
 
-    fun loadFromWeb(){
+    private fun loadFromWeb(){
 
         NetworkFunctions.RetrieveNetworkUseCase(repository, saveWeatherToDB)().onEach {
 
@@ -78,7 +78,7 @@ class HomeVM
     }
 
 
-    fun setUpFavorites(cityWeatherData: List<CityWeather>?) : List<WeatherData>{
+    private fun setUpFavorites(cityWeatherData: List<CityWeather>?) : List<WeatherData>{
         val data = ArrayList<WeatherData>()
         val favoritesList = userFavorites
 

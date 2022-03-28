@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import com.topupmama.weather.R
 import com.topupmama.weather.common.AppConstants.TRANSITION_NAME
 import com.topupmama.weather.common.AppConstants.WEATHER_KEY
-import com.topupmama.weather.data.model.WeatherData
 import com.topupmama.weather.databinding.WeatherDetailsBinding
 import dagger.hilt.android.AndroidEntryPoint
 
