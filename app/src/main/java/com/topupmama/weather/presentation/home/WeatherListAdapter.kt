@@ -3,6 +3,8 @@ package com.topupmama.weather.presentation.home
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -10,7 +12,7 @@ import com.topupmama.weather.data.model.WeatherData
 import com.topupmama.weather.databinding.WeatherItemBinding
 
 class WeatherListAdapter(private val weatherItemClickListener: WeatherItemClickListener, private val favListener: FavListener) :
-    ListAdapter<WeatherData, WeatherListAdapter.WeatherViewHolder>(WeatherItemDiffCallback()) {
+    ListAdapter<WeatherData, WeatherListAdapter.WeatherViewHolder>(WeatherItemDiffCallback()), Filterable {
 
 
     //click listener
@@ -41,7 +43,6 @@ class WeatherListAdapter(private val weatherItemClickListener: WeatherItemClickL
 
     override fun onBindViewHolder(holder: WeatherViewHolder, position: Int) {
         val item = getItem(position) as WeatherData
-        Log.d("TAG", "onBindViewHolder: $item")
         holder.bind(weatherData = item, weatherItemClickListener, favListener)
     }
 
@@ -67,5 +68,49 @@ class WeatherListAdapter(private val weatherItemClickListener: WeatherItemClickL
             }
 
         }
+
+    override fun getFilter(): Filter {
+       return object : Filter() {
+
+           val filteredList = mutableListOf<WeatherData>()
+
+           override fun performFiltering(p0: CharSequence?): FilterResults {
+
+
+               p0?.let {
+
+                   if(it.isEmpty()) {
+                       submitList(currentList)
+                   }
+                   else{
+
+                       val pattern = it.toString().lowercase().trim()
+                       currentList.forEach { weatherData ->
+                           if(weatherData.city.lowercase().contains(pattern)){
+
+                               filteredList.add(weatherData)
+                           }
+                       }
+
+                       Log.d("TAG", "performFiltering: ${filteredList.size}")
+
+                       submitList(filteredList)
+
+                   }
+
+               }
+
+               val results = FilterResults()
+               results.values = filteredList
+               return results
+
+
+           }
+
+           override fun publishResults(p0: CharSequence?, p1: FilterResults?) {
+               submitList(filteredList)
+           }
+       }
+    }
 
 }
